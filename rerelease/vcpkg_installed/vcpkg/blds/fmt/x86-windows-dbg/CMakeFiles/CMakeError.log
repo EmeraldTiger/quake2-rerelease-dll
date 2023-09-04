@@ -1,0 +1,22 @@
+Performing C++ SOURCE FILE Test has_std_11_flag failed with the following output:
+Change Dir: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/fmt/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-vgasmc
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_496a3 && [1/2] Building CXX object CMakeFiles\cmTC_496a3.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-std=c++11'
+[2/2] Linking CXX executable cmTC_496a3.exe
+
+
+Source file was:
+int main() { return 0; }
+
+Performing C++ SOURCE FILE Test has_std_0x_flag failed with the following output:
+Change Dir: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/fmt/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-lttne5
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_4d876 && [1/2] Building CXX object CMakeFiles\cmTC_4d876.dir\src.cxx.obj
+cl : Command line warning D9002 : ignoring unknown option '-std=c++0x'
+[2/2] Linking CXX executable cmTC_4d876.exe
+
+
+Source file was:
+int main() { return 0; }
+

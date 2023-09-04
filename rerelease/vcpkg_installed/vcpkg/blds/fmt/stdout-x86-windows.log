@@ -1,0 +1,17 @@
+-- Using cached fmtlib-fmt-7bdf0628b1276379886c7f6dda2cef2b3b374f0b.tar.gz.
+-- Extracting source C:/Users/Patri/AppData/Local/vcpkg/downloads/fmtlib-fmt-7bdf0628b1276379886c7f6dda2cef2b3b374f0b.tar.gz
+-- Applying patch fix-warning4189.patch
+-- Using source at C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/fmt/src/2b3b374f0b-8ea71ee8ea.clean
+-- Found external ninja('1.11.0').
+-- Configuring x86-windows
+-- Building x86-windows-dbg
+-- Building x86-windows-rel
+-- Installing: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/pkgs/fmt_x86-windows/share/fmt/copyright
+-- Fixing pkgconfig file: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/pkgs/fmt_x86-windows/lib/pkgconfig/fmt.pc
+-- Using cached mingw-w64-i686-pkg-config-0.29.2-3-any.pkg.tar.zst.
+-- Using cached mingw-w64-i686-libwinpthread-git-9.0.0.6373.5be8fcd83-1-any.pkg.tar.zst.
+-- Using cached msys2-msys2-runtime-3.4.6-1-x86_64.pkg.tar.zst.
+-- Using msys root at C:/Users/Patri/AppData/Local/vcpkg/downloads/tools/msys2/5b9374e6ec2c4e17
+-- Fixing pkgconfig file: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/pkgs/fmt_x86-windows/debug/lib/pkgconfig/fmt.pc
+-- Installing: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/pkgs/fmt_x86-windows/share/fmt/usage
+-- Performing post-build validation

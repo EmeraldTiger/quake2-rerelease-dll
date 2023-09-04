@@ -1,0 +1,105 @@
+The target system is: Windows - 10.0.19045 - x86
+The host system is: Windows - 10.0.19045 - AMD64
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x86/cl.exe 
+Build flags: ;/nologo;/DWIN32;/D_WINDOWS;/W3;/utf-8;/GR;/EHsc;/MP;
+Id flags:  
+
+The output was:
+0
+CMakeCXXCompilerId.cpp
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.exe"
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
+
+The CXX compiler identification is MSVC, found in "C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/jsoncpp/x86-windows-dbg/CMakeFiles/3.25.1/CompilerIdCXX/CMakeCXXCompilerId.exe"
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/jsoncpp/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-ioi9c2
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_f241c && [1/2] Building CXX object CMakeFiles\cmTC_f241c.dir\CMakeCXXCompilerABI.cpp.obj
+[2/2] Linking CXX executable cmTC_f241c.exe
+
+
+
+Determining if the include file clocale exists passed with the following output:
+Change Dir: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/jsoncpp/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-mdjzi1
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_76fc4 && [1/2] Building CXX object CMakeFiles\cmTC_76fc4.dir\CheckIncludeFile.cxx.obj
+[2/2] Linking CXX executable cmTC_76fc4.exe
+
+
+
+Determining if the localeconv exist passed with the following output:
+Change Dir: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/jsoncpp/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-6shav3
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_04e51 && [1/2] Building CXX object CMakeFiles\cmTC_04e51.dir\CheckSymbolExists.cxx.obj
+[2/2] Linking CXX executable cmTC_04e51.exe
+
+
+File CheckSymbolExists.cxx:
+/* */
+#include <clocale>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef localeconv
+  return ((int*)(&localeconv))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the include file sys/types.h exists passed with the following output:
+Change Dir: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/jsoncpp/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-sepx2h
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_cf3e6 && [1/2] Building CXX object CMakeFiles\cmTC_cf3e6.dir\CheckIncludeFile.cxx.obj
+[2/2] Linking CXX executable cmTC_cf3e6.exe
+
+
+
+Determining if the include file stdint.h exists passed with the following output:
+Change Dir: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/jsoncpp/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-6lm5iz
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_07987 && [1/2] Building CXX object CMakeFiles\cmTC_07987.dir\CheckIncludeFile.cxx.obj
+[2/2] Linking CXX executable cmTC_07987.exe
+
+
+
+Determining if the include file stddef.h exists passed with the following output:
+Change Dir: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/jsoncpp/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-oiyjkp
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_66ef3 && [1/2] Building CXX object CMakeFiles\cmTC_66ef3.dir\CheckIncludeFile.cxx.obj
+[2/2] Linking CXX executable cmTC_66ef3.exe
+
+
+
+Determining size of lconv passed with the following output:
+Change Dir: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/jsoncpp/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-u2eov4
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_81466 && [1/2] Building CXX object CMakeFiles\cmTC_81466.dir\LCONV_SIZE.cpp.obj
+[2/2] Linking CXX executable cmTC_81466.exe
+
+
+
+Performing C++ SOURCE FILE Test HAVE_DECIMAL_POINT succeeded with the following output:
+Change Dir: C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/jsoncpp/x86-windows-dbg/CMakeFiles/CMakeScratch/TryCompile-ui0q0r
+
+Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_c1a24 && [1/2] Building CXX object CMakeFiles\cmTC_c1a24.dir\src.cxx.obj
+[2/2] Linking CXX executable cmTC_c1a24.exe
+
+
+Source file was:
+
+#include <clocale>
+
+int main()
+{
+  (void)sizeof(((lconv *)0)->decimal_point);
+  return 0;
+}
+
+

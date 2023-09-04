@@ -1,0 +1,8 @@
+C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/fmt/x86-windows-dbg/CMakeFiles/fmt.dir
+C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/fmt/x86-windows-dbg/CMakeFiles/package.dir
+C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/fmt/x86-windows-dbg/CMakeFiles/package_source.dir
+C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/fmt/x86-windows-dbg/CMakeFiles/edit_cache.dir
+C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/fmt/x86-windows-dbg/CMakeFiles/rebuild_cache.dir
+C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/fmt/x86-windows-dbg/CMakeFiles/list_install_components.dir
+C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/fmt/x86-windows-dbg/CMakeFiles/install.dir
+C:/Users/Patri/Documents/GitHub/quake2-rerelease-dll/rerelease/vcpkg_installed/vcpkg/blds/fmt/x86-windows-dbg/CMakeFiles/install/local.dir

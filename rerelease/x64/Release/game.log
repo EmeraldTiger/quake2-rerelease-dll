@@ -1,0 +1,133 @@
+﻿  Installing vcpkg dependencies to C:\Users\Patri\Documents\GitHub\quake2-rerelease-dll\rerelease\vcpkg_installed\x64-windows-static\
+  "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\vcpkg\vcpkg.exe" install  --x-wait-for-lock --triplet "x64-windows-static" --vcpkg-root "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\vcpkg\\" "--x-manifest-root=C:\Users\Patri\Documents\GitHub\quake2-rerelease-dll\rerelease\\" "--x-install-root=C:\Users\Patri\Documents\GitHub\quake2-rerelease-dll\rerelease\vcpkg_installed\x64-windows-static\\" 
+  Fetching registry information from https://github.com/microsoft/vcpkg (HEAD)...
+  Detecting compiler hash for triplet x64-windows...
+  Detecting compiler hash for triplet x64-windows-static...
+  The following packages will be built and installed:
+      fmt:x64-windows-static -> 7.1.3#1 -- C:\Users\Patri\AppData\Local\vcpkg\registries\git-trees\4f8427eb0bd40da1856d4e67bde39a4fda689d72
+      jsoncpp:x64-windows-static -> 1.9.4 -- C:\Users\Patri\AppData\Local\vcpkg\registries\git-trees\cb9fceddf47584c7fda24180c7fd87f5e83728a5
+    * vcpkg-cmake:x64-windows -> 2021-02-26 -- C:\Users\Patri\AppData\Local\vcpkg\registries\git-trees\51896aa8073adb5c8450daa423d03eedf0dfc61f
+    * vcpkg-cmake-config:x64-windows -> 2021-02-26 -- C:\Users\Patri\AppData\Local\vcpkg\registries\git-trees\d255b3d566a8861dcc99a958240463e678528066
+  Additional packages (*) will be modified to complete this operation.
+  Restored 4 package(s) from C:\Users\Patri\AppData\Local\vcpkg\archives in 143 ms. Use --debug to see more details.
+  Installing 1/4 vcpkg-cmake-config:x64-windows...
+  Elapsed time to handle vcpkg-cmake-config:x64-windows: 5.23 ms
+  Installing 2/4 vcpkg-cmake:x64-windows...
+  Elapsed time to handle vcpkg-cmake:x64-windows: 5.04 ms
+  Installing 3/4 fmt:x64-windows-static...
+  Elapsed time to handle fmt:x64-windows-static: 17.2 ms
+  Installing 4/4 jsoncpp:x64-windows-static...
+  Elapsed time to handle jsoncpp:x64-windows-static: 17.9 ms
+  Total install time: 45.4 ms
+  The package fmt provides CMake targets:
+  
+      find_package(fmt CONFIG REQUIRED)
+      target_link_libraries(main PRIVATE fmt::fmt)
+  
+      # Or use the header-only version
+      target_link_libraries(main PRIVATE fmt::fmt-header-only)
+  
+  jsoncpp provides CMake targets:
+  
+      # this is heuristically generated, and may not be correct
+      find_package(jsoncpp CONFIG REQUIRED)
+      target_link_libraries(main PRIVATE jsoncpp_object jsoncpp_static)
+  
+  bot_debug.cpp
+  bot_exports.cpp
+  bot_think.cpp
+  bot_utils.cpp
+  cg_main.cpp
+  cg_screen.cpp
+  g_ctf.cpp
+  p_ctf_menu.cpp
+  g_ai.cpp
+  g_chase.cpp
+  g_cmds.cpp
+  g_combat.cpp
+  g_func.cpp
+  g_items.cpp
+  g_main.cpp
+  g_misc.cpp
+  g_monster.cpp
+  g_phys.cpp
+  g_save.cpp
+  g_spawn.cpp
+  g_svcmds.cpp
+  g_target.cpp
+  g_trigger.cpp
+  g_turret.cpp
+  g_utils.cpp
+  g_weapon.cpp
+  m_actor.cpp
+  m_arachnid.cpp
+  m_berserk.cpp
+  m_boss2.cpp
+  m_boss3.cpp
+  m_boss31.cpp
+  m_boss32.cpp
+  m_brain.cpp
+  m_chick.cpp
+  m_flipper.cpp
+  m_float.cpp
+  m_flyer.cpp
+  m_gladiator.cpp
+  m_guardian.cpp
+  m_guncmdr.cpp
+  m_gunner.cpp
+  m_hover.cpp
+  m_infantry.cpp
+  m_insane.cpp
+  m_medic.cpp
+  m_move.cpp
+  m_mutant.cpp
+  m_parasite.cpp
+  m_shambler.cpp
+  m_soldier.cpp
+  m_supertank.cpp
+  m_tank.cpp
+  p_client.cpp
+  p_hud.cpp
+  p_move.cpp
+  p_trail.cpp
+  p_view.cpp
+  p_weapon.cpp
+  q_std.cpp
+  g_rogue_combat.cpp
+  g_rogue_func.cpp
+  g_rogue_items.cpp
+  g_rogue_misc.cpp
+  g_rogue_monster.cpp
+  g_rogue_newai.cpp
+  g_rogue_newdm.cpp
+  g_rogue_newfnc.cpp
+  g_rogue_newtarg.cpp
+  g_rogue_newtrig.cpp
+  g_rogue_newweap.cpp
+  g_rogue_phys.cpp
+  g_rogue_spawn.cpp
+  g_rogue_sphere.cpp
+  g_rogue_utils.cpp
+  m_rogue_carrier.cpp
+  m_rogue_stalker.cpp
+  m_rogue_turret.cpp
+  m_rogue_widow.cpp
+  m_rogue_widow2.cpp
+  p_rogue_weapon.cpp
+  rogue_dm_ball.cpp
+  rogue_dm_tag.cpp
+  g_xatrix_func.cpp
+  g_xatrix_items.cpp
+  g_xatrix_misc.cpp
+  g_xatrix_monster.cpp
+  g_xatrix_target.cpp
+  g_xatrix_weapon.cpp
+  m_xatrix_fixbot.cpp
+  m_xatrix_gekk.cpp
+  p_xatrix_weapon.cpp
+     Creating library ../game_x64.lib and object ../game_x64.exp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 9385 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  game.vcxproj -> C:\Users\Patri\Documents\GitHub\quake2-rerelease-dll\game_x64.dll
