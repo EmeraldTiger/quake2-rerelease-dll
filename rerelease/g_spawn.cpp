@@ -368,6 +368,8 @@ static const std::initializer_list<spawn_t> spawns = {
 	{ "turret_breach", SP_turret_breach },
 	{ "turret_base", SP_turret_base },
 	{ "turret_driver", SP_turret_driver },
+	// Emerald
+	{ "monster_quad_medic", SP_monster_medic },
 
 	// RAFAEL
 	{ "func_object_repair", SP_object_repair },

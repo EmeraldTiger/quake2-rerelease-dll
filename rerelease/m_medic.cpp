@@ -1551,6 +1551,12 @@ void SP_monster_medic(edict_t *self)
 		self->yaw_speed = 40; // default is 20
 		MedicCommanderCache();
 	}
+	else if (strcmp(self->classname, "monster_quad_medic") == 0)
+	{
+		self->health = 400 * st.health_multiplier;
+		self->mass = 400;
+		self->yaw_speed = 30;
+	}
 	else
 	{
 		// PMM
