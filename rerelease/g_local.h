@@ -696,7 +696,7 @@ enum monster_ai_flags_t : uint64_t
 	AI_FORGET_ENEMY = bit_v<35>,			// forget the current enemy
 	AI_DOUBLE_TROUBLE = bit_v<36>, // JORG only
 	AI_REACHED_HOLD_COMBAT = bit_v<37>,
-	AI_THIRD_EYE = bit_v<38>
+	AI_THIRD_EYE = bit_v<38>,
 };
 MAKE_ENUM_BITFLAGS(monster_ai_flags_t);
 

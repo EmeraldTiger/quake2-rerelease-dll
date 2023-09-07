@@ -247,6 +247,52 @@ bool canReach(edict_t *self, edict_t *other)
 	return trace.fraction == 1.0f || trace.ent == other;
 }
 
+edict_t* medic_FindLiveMonster(edict_t* self)
+{
+	float	 radius;
+	edict_t* ent = nullptr;
+	edict_t* best = nullptr;
+
+	if (self->monsterinfo.react_to_damage_time > level.time)
+		return nullptr;
+
+	if (self->monsterinfo.aiflags & AI_STAND_GROUND)
+		radius = MEDIC_MAX_HEAL_DISTANCE;
+	else
+		radius = 1024;
+
+	while ((ent = findradius(ent, self->s.origin, radius)) != nullptr)
+	{
+		if (ent == self)
+			continue;
+		if (!(ent->svflags & SVF_MONSTER))
+			continue;
+		if (ent->monsterinfo.aiflags & AI_GOOD_GUY)
+			continue;
+		// We want living enemies, not corpses
+		if (ent->health < 1)
+			continue;
+		// Don't give quad to enemies that already have it
+		if (ent->monsterinfo.quad_time > level.time)
+			continue;
+		if (!visible(self, ent))
+			continue;
+		if (!best)
+		{
+			best = ent;
+			continue;
+		}
+		if (ent->max_health <= best->max_health)
+			continue;
+		best = ent;
+	}
+
+	if (best)
+		self->timestamp = level.time + MEDIC_TRY_TIME;
+
+	return best;
+}
+
 edict_t *medic_FindDeadMonster(edict_t *self)
 {
 	float	 radius;
@@ -319,7 +365,14 @@ MONSTERINFO_IDLE(medic_idle) (edict_t *self) -> void
 
 	if (!self->oldenemy)
 	{
-		ent = medic_FindDeadMonster(self);
+		if (strcmp(self->classname, "monster_quad_medic") == 0)
+		{
+			ent = medic_FindLiveMonster(self);
+		}
+		else 
+		{
+			ent = medic_FindDeadMonster(self);
+		}
 		if (ent)
 		{
 			self->oldenemy = self->enemy;
@@ -334,6 +387,7 @@ MONSTERINFO_IDLE(medic_idle) (edict_t *self) -> void
 MONSTERINFO_SEARCH(medic_search) (edict_t *self) -> void
 {
 	edict_t *ent;
+	ent = nullptr;
 
 	// PMM - commander sounds
 	if (self->mass == 400)
@@ -343,7 +397,14 @@ MONSTERINFO_SEARCH(medic_search) (edict_t *self) -> void
 
 	if (!self->oldenemy)
 	{
-		ent = medic_FindDeadMonster(self);
+		if (strcmp(self->classname, "monster_quad_medic") == 0)
+		{
+			ent = medic_FindLiveMonster(self);
+		}
+		else
+		{
+			ent = medic_FindDeadMonster(self);
+		}
 		if (ent)
 		{
 			self->oldenemy = self->enemy;
@@ -502,7 +563,14 @@ MONSTERINFO_RUN(medic_run) (edict_t *self) -> void
 	{
 		edict_t *ent;
 
-		ent = medic_FindDeadMonster(self);
+		if (strcmp(self->classname, "monster_quad_medic") == 0)
+		{
+			ent = medic_FindLiveMonster(self);
+		}
+		else
+		{
+			ent = medic_FindDeadMonster(self);
+		}
 		if (ent)
 		{
 			self->oldenemy = self->enemy;
@@ -876,7 +944,7 @@ void medic_cable_attack(edict_t *self)
 
 	// see if our enemy has changed to a client, or our target has more than 0 health,
 	// abort it .. we got switched to someone else due to damage
-	if (self->enemy->health > 0)
+	if (self->enemy->health > 0 && strcmp(self->classname, "monster_quad_medic") != 0)
 	{
 		abortHeal(self, false, false, false);
 		return;
@@ -990,6 +1058,17 @@ void medic_cable_attack(edict_t *self)
 
 			if (self->enemy->monsterinfo.setskin)
 				self->enemy->monsterinfo.setskin(self->enemy);
+
+			if (strcmp(self->classname, "monster_quad_medic") == 0)
+			{
+				// emerald
+				self->enemy->monsterinfo.quad_time = level.time + 10_sec;
+				gi.sound(self->enemy, CHAN_ITEM, gi.soundindex("items/damage.wav"), 1, ATTN_NORM, 0);
+				self->enemy->s.scale = 2;
+				self->enemy->mins *= self->enemy->s.scale;
+				self->enemy->maxs *= self->enemy->s.scale;
+				gi.Com_Print("give quad");
+			}
 
 			if (self->enemy->think)
 			{
@@ -1554,7 +1633,6 @@ void SP_monster_medic(edict_t *self)
 	else if (strcmp(self->classname, "monster_quad_medic") == 0)
 	{
 		self->health = 400 * st.health_multiplier;
-		self->mass = 400;
 		self->yaw_speed = 30;
 	}
 	else

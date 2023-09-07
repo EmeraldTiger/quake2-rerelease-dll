@@ -15,7 +15,9 @@ void cleanupHealTarget(edict_t *ent)
 	ent->monsterinfo.healer = nullptr;
 	ent->takedamage = true;
 	ent->monsterinfo.aiflags &= ~AI_RESURRECTING;
+
 	M_SetEffects(ent);
+
 }
 
 // **********************
