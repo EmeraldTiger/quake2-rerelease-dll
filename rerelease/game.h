@@ -2169,7 +2169,7 @@ struct cg_server_data_t
 
 constexpr int32_t PROTOCOL_VERSION_3XX = 34;
 constexpr int32_t PROTOCOL_VERSION_DEMOS = 2022;
-constexpr int32_t PROTOCOL_VERSION       = 2023;
+constexpr int32_t PROTOCOL_VERSION       = 2022;
 
 //
 // functions provided by main engine for client

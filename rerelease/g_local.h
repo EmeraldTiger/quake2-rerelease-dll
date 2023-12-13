@@ -891,6 +891,7 @@ enum item_id_t : int32_t {
 	IT_WEAPON_PHALANX,
 	IT_WEAPON_BFG,
 	IT_WEAPON_DISRUPTOR,
+	IT_WEAPON_SPAWNGUN,
 #if 0
 	IT_WEAPON_DISINTEGRATOR,
 #endif
@@ -2257,6 +2258,7 @@ void fire_plasma(edict_t *self, const vec3_t &start, const vec3_t &dir, int dama
 void fire_trap(edict_t *self, const vec3_t &start, const vec3_t &aimdir, int speed);
 // RAFAEL
 void fire_disintegrator(edict_t *self, const vec3_t &start, const vec3_t &dir, int speed);
+void fire_spawngun(edict_t* self, const vec3_t& start, const vec3_t& dir, int speed);
 vec3_t P_CurrentKickAngles(edict_t *ent);
 vec3_t P_CurrentKickOrigin(edict_t *ent);
 void P_AddWeaponKick(edict_t *ent, const vec3_t &origin, const vec3_t &angles);

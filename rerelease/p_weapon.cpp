@@ -1905,3 +1905,40 @@ void Weapon_Beta_Disintegrator(edict_t *ent)
 
 	Weapon_Generic(ent, 16, 23, 46, 50, pause_frames, fire_frames, weapon_disint_fire);
 }
+
+/*
+======================================================================
+
+SPAWNGUN
+
+======================================================================
+*/
+
+void weapon_spawngun_fire(edict_t* ent)
+{
+
+	vec3_t start, dir;
+	P_ProjectSource(ent, ent->client->v_angle, { 0, 7, -8 }, start, dir);
+
+	P_AddWeaponKick(ent, ent->client->v_forward * -2, { -1.f, 0.f, 0.f });
+
+	fire_spawngun(ent, start, dir, 800);
+
+	// send muzzle flash
+	gi.WriteByte(svc_muzzleflash);
+	gi.WriteEntity(ent);
+	gi.WriteByte(MZ_RAILGUN | is_silenced);
+	gi.multicast(ent->s.origin, MULTICAST_PVS, false);
+
+	PlayerNoise(ent, start, PNOISE_WEAPON);
+
+	G_RemoveAmmo(ent);
+}
+
+void Weapon_Spawngun(edict_t* ent)
+{
+	constexpr int pause_frames[] = { 56, 0 };
+	constexpr int fire_frames[] = { 4, 0 };
+
+	Weapon_Generic(ent, 3, 18, 56, 61, pause_frames, fire_frames, weapon_spawngun_fire);
+}
