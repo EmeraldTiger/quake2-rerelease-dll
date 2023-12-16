@@ -769,8 +769,10 @@ enum movetype_t {
 	MOVETYPE_WALLBOUNCE,
 	// RAFAEL
 	// ROGUE
-	MOVETYPE_NEWTOSS // PGM - for deathball
+	MOVETYPE_NEWTOSS, // PGM - for deathball
 					 // ROGUE
+	// EMERALD
+	MOVETYPE_DECEL // Starts off at full speed and decelerates over time
 };
 
 // edict->flags
@@ -891,6 +893,7 @@ enum item_id_t : int32_t {
 	IT_WEAPON_PHALANX,
 	IT_WEAPON_BFG,
 	IT_WEAPON_DISRUPTOR,
+	IT_WEAPON_FLAMETHROWER,
 #if 0
 	IT_WEAPON_DISINTEGRATOR,
 #endif
@@ -2345,6 +2348,9 @@ vec3_t P_CurrentKickAngles(edict_t *ent);
 vec3_t P_CurrentKickOrigin(edict_t *ent);
 void P_AddWeaponKick(edict_t *ent, const vec3_t &origin, const vec3_t &angles);
 
+// EMERALD
+void fire_flamethrower(edict_t* self, const vec3_t& start, const vec3_t& dir, int speed);
+
 // we won't ever pierce more than this many entities for a single trace.
 constexpr size_t MAX_PIERCE = 16;
 
@@ -3155,6 +3161,7 @@ struct edict_t
 	float random;
 
 	gtime_t teleport_time;
+	gtime_t	fire_time;
 
 	contents_t	  watertype;
 	water_level_t waterlevel;
@@ -3636,6 +3643,9 @@ struct cached_assetindex
 		}
 	}
 };
+
+// EMERALD constants
+constexpr float FLAME_START_SPEED = 800;
 
 using cached_soundindex = cached_assetindex<&local_game_import_t::soundindex>;
 using cached_modelindex = cached_assetindex<&local_game_import_t::modelindex>;

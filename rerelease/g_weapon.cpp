@@ -1215,3 +1215,31 @@ void fire_disintegrator(edict_t *self, const vec3_t &start, const vec3_t &forwar
 
 	gi.linkentity(bfg);
 }
+
+void fire_flamethrower(edict_t* self, const vec3_t& start, const vec3_t& forward, int speed)
+{
+	edict_t* bfg;
+
+	bfg = G_Spawn();
+	bfg->s.origin = start;
+	bfg->s.angles = vectoangles(forward);
+	bfg->velocity = forward * speed;
+	bfg->movetype = MOVETYPE_DECEL;
+	bfg->clipmask = MASK_PROJECTILE;
+	// [Paril-KEX]
+	if (self->client && !G_ShouldPlayersCollide(true))
+		bfg->clipmask &= ~CONTENTS_PLAYER;
+	bfg->solid = SOLID_BBOX;
+	bfg->s.effects |= EF_ANIM_ALLFAST | EF_PLASMA;
+	bfg->svflags |= SVF_PROJECTILE;
+	bfg->flags |= FL_DODGE;
+	//bfg->s.modelindex = gi.modelindex("models/objects/explode/tris.md2");
+	bfg->owner = self;
+	bfg->touch = disintegrator_touch;
+	bfg->nextthink = level.time + gtime_t::from_sec(4000.f / speed);
+	bfg->think = G_FreeEdict;
+	bfg->classname = "disint ball";
+	bfg->s.sound = gi.soundindex("weapons/bfg__l1a.wav");
+
+	gi.linkentity(bfg);
+}

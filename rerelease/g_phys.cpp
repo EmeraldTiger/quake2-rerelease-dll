@@ -563,6 +563,7 @@ void SV_Physics_Toss(edict_t *ent)
 		// move type for rippergun projectile
 		&& ent->movetype != MOVETYPE_WALLBOUNCE
 		// RAFAEL
+		&& ent->movetype != MOVETYPE_DECEL
 	)
 		SV_AddGravity(ent);
 
@@ -572,6 +573,40 @@ void SV_Physics_Toss(edict_t *ent)
 	// move origin
 	int num_tries = 5;
 	float time_left = gi.frame_time_s;
+
+	// EMERALD
+	if (ent->movetype == MOVETYPE_DECEL)
+	{
+		constexpr float decel_rate = 15;
+		constexpr float kill_speed = 100;
+
+		float size_dev = frandom() * 500;
+
+		float size = 800 - size_dev;
+
+		if (ent->velocity.length() > kill_speed)
+		{
+			ent->velocity -= ent->velocity.normalized() * decel_rate;
+
+			if (level.time.milliseconds() % 100 == 0)
+			{
+				gi.WriteByte(svc_temp_entity);
+				gi.WriteByte(TE_EXPLOSION1);
+
+				gi.WritePosition(ent->s.origin);
+				gi.multicast(ent->s.origin, MULTICAST_PHS, false);
+			}
+		}
+		else
+		{
+			// Free after velocity goes below the kill speed,
+			// so the bolt lifetime doesn't have to be changed 
+			// when the decel rate is changed
+
+			ent->think = G_FreeEdict;
+			ent->nextthink = level.time;
+		}
+	}
 
 	while (time_left)
 	{
@@ -985,6 +1020,8 @@ void G_RunEntity(edict_t *ent)
 	case MOVETYPE_BOUNCE:
 	case MOVETYPE_FLY:
 	case MOVETYPE_FLYMISSILE:
+	// EMERALD
+	case MOVETYPE_DECEL:
 	// RAFAEL
 	case MOVETYPE_WALLBOUNCE:
 		// RAFAEL

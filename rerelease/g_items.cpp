@@ -34,6 +34,9 @@ void Weapon_ProxLauncher(edict_t *ent);
 // ROGUE
 void Weapon_Beta_Disintegrator(edict_t *ent);
 
+// EMERALD
+void Weapon_Flamethrower(edict_t* ent);
+
 void	   Use_Quad(edict_t *ent, gitem_t *item);
 static gtime_t quad_drop_timeout_hack;
 
@@ -2400,6 +2403,35 @@ model="models/weapons/g_launch/tris.md2"
 		/* armor_info */ nullptr,
 		/* tag */ 0,
 		/* precaches */ "models/proj/disintegrator/tris.md2 weapons/disrupt.wav weapons/disint2.wav weapons/disrupthit.wav",
+	},
+
+	/*QUAKED weapon_flamethrower (.3 .3 1) (-16 -16 -16) (16 16 16)
+*/
+	{
+		/* id */ IT_WEAPON_FLAMETHROWER,
+		/* classname */ "weapon_flamethrower",
+		/* pickup */ Pickup_Weapon,
+		/* use */ Use_Weapon,
+		/* drop */ Drop_Weapon,
+		/* weaponthink */ Weapon_Flamethrower,
+		/* pickup_sound */ "misc/w_pkup.wav",
+		/* world_model */ "models/weapons/g_plasma/tris.md2",
+		/* world_model_flags */ EF_ROTATE | EF_BOB,
+		/* view_model */ "models/weapons/v_plasma/tris.md2",
+		/* icon */ "w_plasma",
+		/* use_name */  "Flamethrower",
+		/* pickup_name */  "$item_flamethrower",
+		/* pickup_name_definite */ "$item_flamethrower_def",
+		/* quantity */ 1,
+		/* ammo */ IT_AMMO_BULLETS,
+		/* chain */ IT_NULL,
+		/* flags */ IF_WEAPON | IF_STAY_COOP,
+		/* vwep_model */ "#w_plasma.md2",
+		/* armor_info */ nullptr,
+		/* tag */ 0,
+		/* precaches */ "weapons/chngnu1a.wav weapons/chngnl1a.wav weapons/machgf3b.wav weapons/chngnd1a.wav",
+		/* sort_id */ 0,
+		/* quantity_warn */ 60
 	},
 
 	// ROGUE WEAPONS

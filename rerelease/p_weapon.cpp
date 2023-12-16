@@ -1923,3 +1923,70 @@ void Weapon_Beta_Disintegrator(edict_t *ent)
 
 	Weapon_Generic(ent, 16, 23, 46, 50, pause_frames, fire_frames, weapon_disint_fire);
 }
+
+/*
+======================================================================
+
+FLAMETHROWER
+
+======================================================================
+*/
+
+void Flamethrower_Fire(edict_t* self)
+{
+	vec3_t start, dir;
+
+	if (!(self->client->buttons & BUTTON_ATTACK))
+	{
+		self->client->ps.gunframe = 7;
+		return;
+	}
+
+	if (self->client->ps.gunframe == 5)
+		self->client->ps.gunframe = 6;
+	else
+		self->client->ps.gunframe = 5;
+
+	if (self->client->pers.inventory[self->client->pers.weapon->ammo] < 1)
+	{
+		self->client->ps.gunframe = 7;
+		NoAmmoWeaponChange(self, true);
+		return;
+	}
+
+	P_AddWeaponKick(self, self->client->v_forward * -2, { -1.f, 0.f, 0.f });
+
+	for (int i = 0; i < 3; i++)
+	{
+		vec3_t flame_spread_angle = self->client->v_angle;
+		flame_spread_angle[0] += crandom() * 8;
+		flame_spread_angle[1] += crandom() * 8;
+		flame_spread_angle[2] += crandom() * 8;
+
+		P_ProjectSource(self, flame_spread_angle, { 24, 8, -8 }, start, dir);
+
+		fire_flamethrower(self, start, dir, FLAME_START_SPEED + crandom() * 50);
+	}
+
+	G_RemoveAmmo(self);
+
+	self->client->anim_priority = ANIM_ATTACK;
+	if (self->client->ps.pmove.pm_flags & PMF_DUCKED)
+	{
+		self->s.frame = FRAME_crattak1 - (int)(frandom() + 0.25f);
+		self->client->anim_end = FRAME_crattak9;
+	}
+	else
+	{
+		self->s.frame = FRAME_attack1 - (int)(frandom() + 0.25f);
+		self->client->anim_end = FRAME_attack8;
+	}
+	self->client->anim_time = 0_ms;
+}
+
+void Weapon_Flamethrower(edict_t* ent)
+{
+	constexpr int pause_frames[] = { 5 };
+
+	Weapon_Repeating(ent, 3, 6, 46, 51, pause_frames, Flamethrower_Fire);
+}
