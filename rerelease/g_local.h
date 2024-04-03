@@ -769,8 +769,10 @@ enum movetype_t {
 	MOVETYPE_WALLBOUNCE,
 	// RAFAEL
 	// ROGUE
-	MOVETYPE_NEWTOSS // PGM - for deathball
+	MOVETYPE_NEWTOSS, // PGM - for deathball
 					 // ROGUE
+	// EMERALD
+	MOVETYPE_PIERCE,
 };
 
 // edict->flags
@@ -878,6 +880,7 @@ enum item_id_t : int32_t {
 	IT_WEAPON_MACHINEGUN,
 	IT_WEAPON_ETF_RIFLE,
 	IT_WEAPON_CHAINGUN,
+	IT_WEAPON_ETF_CANNON, // EMERALD
 	IT_AMMO_GRENADES,
 	IT_AMMO_TRAP,
 	IT_AMMO_TESLA,
@@ -2925,6 +2928,9 @@ struct gclient_t
 
 	edict_t *chase_target; // player we are chasing
 	bool	 update_chase; // need to update chase info?
+
+	// EMERALD
+	gtime_t	etf_time; // time charging the etf cannon
 
 	//=======
 	// ROGUE

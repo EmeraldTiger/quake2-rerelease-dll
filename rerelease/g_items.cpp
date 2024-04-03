@@ -33,6 +33,9 @@ void Weapon_Tesla(edict_t *ent);
 void Weapon_ProxLauncher(edict_t *ent);
 // ROGUE
 void Weapon_Beta_Disintegrator(edict_t *ent);
+// EMERALD
+void Weapon_ETF_Cannon(edict_t* ent);
+
 
 void	   Use_Quad(edict_t *ent, gitem_t *item);
 static gtime_t quad_drop_timeout_hack;
@@ -2021,6 +2024,35 @@ model="models/weapons/g_shotg/tris.md2"
 		/* precaches */ "weapons/chngnu1a.wav weapons/chngnl1a.wav weapons/machgf3b.wav weapons/chngnd1a.wav",
 		/* sort_id */ 0,
 		/* quantity_warn */ 60
+	},
+
+	/*QUAKED weapon_etf_cannon (.3 .3 1) (-16 -16 -16) (16 16 16) TRIGGER_SPAWN
+	*/
+	{
+		/* id */ IT_WEAPON_ETF_CANNON,
+		/* classname */ "weapon_etf_cannon",
+		/* pickup */ Pickup_Weapon,
+		/* use */ Use_Weapon,
+		/* drop */ Drop_Weapon,
+		/* weaponthink */ Weapon_ETF_Cannon,
+		/* pickup_sound */ "misc/w_pkup.wav",
+		/* world_model */ "models/weapons/g_plasmr/tris.md2",
+		/* world_model_flags */ EF_ROTATE | EF_BOB,
+		/* view_model */ "models/weapons/v_plasmr/tris.md2",
+		/* icon */ "w_etf_rifle",
+		/* use_name */  "ETF Cannon",
+		/* pickup_name */  "$item_etf_cannon",
+		/* pickup_name_definite */ "$item_etf_cannon_def",
+		/* quantity */ 1,
+		/* ammo */ IT_AMMO_FLECHETTES,
+		/* chain */ IT_WEAPON_MACHINEGUN,
+		/* flags */ IF_WEAPON | IF_STAY_COOP,
+		/* vwep_model */ "#w_etfrifle.md2",
+		/* armor_info */ nullptr,
+		/* tag */ 0,
+		/* precaches */ "weapons/nail1.wav models/proj/flechette/tris.md2",
+		/* sort_id */ 0,
+		/* quantity_warn */ 30
 	},
 
 /*QUAKED ammo_grenades (.3 .3 1) (-16 -16 -16) (16 16 16)

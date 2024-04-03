@@ -907,6 +907,7 @@ static bool CheckPathVisibility(const vec3_t &start, const vec3_t &end)
 
 THINK(monster_think) (edict_t *self) -> void
 {
+
 	// [Paril-KEX] monster sniff testing; if we can make an unobstructed path to the player, murder ourselves.
 	if (g_debug_monster_kills->integer)
 	{
@@ -1352,6 +1353,7 @@ void monster_start_go(edict_t *self)
 	// Paril: moved here so this applies to swim/fly monsters too
 	if (!(self->flags & FL_STATIONARY))
 	{
+
 		const vec3_t check = self->s.origin;
 
 		// [Paril-KEX] different nudge method; see if any of the bbox sides are clear,

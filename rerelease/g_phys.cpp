@@ -985,6 +985,7 @@ void G_RunEntity(edict_t *ent)
 	case MOVETYPE_BOUNCE:
 	case MOVETYPE_FLY:
 	case MOVETYPE_FLYMISSILE:
+	case MOVETYPE_PIERCE: // EMERALD
 	// RAFAEL
 	case MOVETYPE_WALLBOUNCE:
 		// RAFAEL

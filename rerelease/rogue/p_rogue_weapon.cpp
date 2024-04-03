@@ -315,7 +315,7 @@ void weapon_etf_rifle_fire(edict_t *ent)
 
 	vec3_t start, dir;
 	P_ProjectSource(ent, ent->client->v_angle + kick_angles, offset, start, dir);
-	fire_flechette(ent, start, dir, damage, 1150, kick);
+	fire_flechette(ent, start, dir, damage, 1300, kick);
 	Weapon_PowerupSound(ent);
 
 	// send muzzle flash
@@ -347,6 +347,48 @@ void Weapon_ETF_Rifle(edict_t *ent)
 	constexpr int pause_frames[] = { 18, 28, 0 };
 
 	Weapon_Repeating(ent, 4, 7, 37, 41, pause_frames, weapon_etf_rifle_fire);
+}
+
+void Weapon_ETFCannon_Fire(edict_t* ent)
+{
+	int	  damage;
+	float damage_radius;
+	int	  radius_damage;
+
+	vec3_t start, dir;
+
+	for (int i = 1; i <= 20; i++)
+	{
+		P_ProjectSource(ent, ent->client->v_angle, { 8, 8, -8 }, start, dir);
+
+		dir[0] += crandom() * 0.1;
+		dir[1] += crandom() * 0.1;
+		dir[2] += crandom() * 0.1;
+
+		int speed_var = frandom() * 800;
+
+		fire_flechette(ent, start, dir, 9, 1150 + speed_var, 30);
+	}
+
+	P_AddWeaponKick(ent, ent->client->v_forward * -2, { -1.f, 0.f, 0.f });
+
+	// send muzzle flash
+	gi.WriteByte(svc_muzzleflash);
+	gi.WriteEntity(ent);
+	gi.WriteByte((ent->client->ps.gunframe == 6 ? MZ_ETF_RIFLE : MZ_ETF_RIFLE_2) | is_silenced);
+	gi.multicast(ent->s.origin, MULTICAST_PVS, false);
+
+	PlayerNoise(ent, start, PNOISE_WEAPON);
+
+	G_RemoveAmmo(ent);
+}
+
+void Weapon_ETF_Cannon(edict_t* ent)
+{
+	constexpr int pause_frames[] = { 44 };
+	constexpr int fire_frames[] = { 12, 0 };
+
+	Weapon_Generic(ent, 8, 19, 44, 51, pause_frames, fire_frames, Weapon_ETFCannon_Fire);
 }
 
 constexpr int32_t HEATBEAM_DM_DMG = 15;

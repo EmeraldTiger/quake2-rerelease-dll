@@ -21,21 +21,32 @@ TOUCH(flechette_touch) (edict_t *self, edict_t *other, const trace_t &tr, bool o
 	if (self->client)
 		PlayerNoise(self->owner, self->s.origin, PNOISE_IMPACT);
 
-	if (other->takedamage)
+
+	gi.WriteByte(svc_temp_entity);
+	gi.WriteByte(TE_FLECHETTE);
+	gi.WritePosition(self->s.origin);
+	gi.WriteDir(tr.plane.normal);
+	gi.multicast(self->s.origin, MULTICAST_PHS, false);
+
+	if (!(other->clipmask & MASK_MONSTERSOLID))
 	{
-		T_Damage(other, self, self->owner, self->velocity, self->s.origin, tr.plane.normal,
-				 self->dmg, (int) self->dmg_radius, DAMAGE_NO_REG_ARMOR, MOD_ETF_RIFLE);
+		G_FreeEdict(self);
 	}
-	else
+}
+
+THINK(flechette_think) (edict_t* self) -> void
+{
+	vec3_t disp = self->velocity.normalized() * 20;
+
+	trace_t tr = gi.traceline(self->s.origin - disp, self->s.origin + disp, self, MASK_PROJECTILE);
+
+	if (tr.ent->takedamage)
 	{
-		gi.WriteByte(svc_temp_entity);
-		gi.WriteByte(TE_FLECHETTE);
-		gi.WritePosition(self->s.origin);
-		gi.WriteDir(tr.plane.normal);
-		gi.multicast(self->s.origin, MULTICAST_PHS, false);
+		T_Damage(tr.ent, self, self->owner, self->velocity, self->s.origin, tr.plane.normal,
+			self->dmg, 10, DAMAGE_NO_REG_ARMOR, MOD_ETF_RIFLE);
 	}
 
-	G_FreeEdict(self);
+	self->nextthink = level.time + 20_ms;
 }
 
 void fire_flechette(edict_t *self, const vec3_t &start, const vec3_t &dir, int damage, int speed, int kick)
@@ -47,9 +58,8 @@ void fire_flechette(edict_t *self, const vec3_t &start, const vec3_t &dir, int d
 	flechette->s.old_origin = start;
 	flechette->s.angles = vectoangles(dir);
 	flechette->velocity = dir * speed;
-	flechette->svflags |= SVF_PROJECTILE;
 	flechette->movetype = MOVETYPE_FLYMISSILE;
-	flechette->clipmask = MASK_PROJECTILE;
+	flechette->clipmask = MASK_SOLID; // EMERALD
 	flechette->flags |= FL_DODGE;
 
 	// [Paril-KEX]
@@ -62,19 +72,22 @@ void fire_flechette(edict_t *self, const vec3_t &start, const vec3_t &dir, int d
 
 	flechette->owner = self;
 	flechette->touch = flechette_touch;
-	flechette->nextthink = level.time + gtime_t::from_sec(8000.f / speed);
-	flechette->think = G_FreeEdict;
+	flechette->nextthink = level.time;
+	flechette->think = flechette_think;
 	flechette->dmg = damage;
-	flechette->dmg_radius = (float) kick;
 
 	gi.linkentity(flechette);
 
+	/*
 	trace_t tr = gi.traceline(self->s.origin, flechette->s.origin, flechette, flechette->clipmask);
+
 	if (tr.fraction < 1.0f)
 	{
 		flechette->s.origin = tr.endpos + (tr.plane.normal * 1.f);
 		flechette->touch(flechette, tr.ent, tr, false);
 	}
+	*/
+
 }
 
 // **************************
