@@ -43,10 +43,13 @@ THINK(flechette_think) (edict_t* self) -> void
 	if (tr.ent->takedamage && tr.ent != self->enemy)
 	{
 		T_Damage(tr.ent, self, self->owner, self->velocity, self->s.origin, tr.plane.normal,
-			self->dmg, 10, DAMAGE_NO_REG_ARMOR, MOD_ETF_RIFLE);
+			self->dmg, self->radius_dmg, DAMAGE_NO_REG_ARMOR, MOD_ETF_RIFLE);
 
 		// Don't pierce this enemy again, in case we're still inside them when the next think occurs
 		self->enemy = tr.ent;
+
+		// Double damage each time we pass through an enemy
+		self->dmg *= 2;
 	}
 
 	self->nextthink = level.time + 20_ms;
@@ -78,6 +81,7 @@ void fire_flechette(edict_t *self, const vec3_t &start, const vec3_t &dir, int d
 	flechette->nextthink = level.time;
 	flechette->think = flechette_think;
 	flechette->dmg = damage;
+	flechette->radius_dmg = kick;
 
 	gi.linkentity(flechette);
 

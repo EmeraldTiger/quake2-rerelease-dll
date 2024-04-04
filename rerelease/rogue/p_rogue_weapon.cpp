@@ -359,16 +359,20 @@ void Weapon_ETFCannon_Fire(edict_t* ent)
 
 	for (int i = 1; i <= 20; i++)
 	{
+		vec3_t forward, right, up;
+		vec3_t vec;
+
+		AngleVectors(ent->client->v_angle, forward, right, up);
 
 		P_ProjectSource(ent, ent->client->v_angle, { 8, 8, -8 }, start, dir);
 
-		dir[0] += crandom() * 0.1;
-		dir[1] += crandom() * 0.1;
-		dir[2] += crandom() * 0.1;
+		// Random-ish looking pattern without actually being random
+		vec = RotatePointAroundVector(up, dir, i*0.5);
+		vec = RotatePointAroundVector(forward, vec, i*66);
 
 		int speed_var = frandom() * 800;
 
-		fire_flechette(ent, start, dir, 10, 1300 + speed_var, 30);
+		fire_flechette(ent, start, vec, 10, 1300 + speed_var, 10);
 	}
 
 	P_AddWeaponKick(ent, ent->client->v_forward * -2, { -1.f, 0.f, 0.f });
