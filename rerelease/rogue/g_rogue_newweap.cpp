@@ -40,10 +40,13 @@ THINK(flechette_think) (edict_t* self) -> void
 
 	trace_t tr = gi.traceline(self->s.origin - disp, self->s.origin + disp, self, MASK_PROJECTILE);
 
-	if (tr.ent->takedamage)
+	if (tr.ent->takedamage && tr.ent != self->enemy)
 	{
 		T_Damage(tr.ent, self, self->owner, self->velocity, self->s.origin, tr.plane.normal,
 			self->dmg, 10, DAMAGE_NO_REG_ARMOR, MOD_ETF_RIFLE);
+
+		// Don't pierce this enemy again, in case we're still inside them when the next think occurs
+		self->enemy = tr.ent;
 	}
 
 	self->nextthink = level.time + 20_ms;

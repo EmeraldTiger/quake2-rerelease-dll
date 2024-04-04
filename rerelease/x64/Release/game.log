@@ -1,8 +1,8 @@
 ﻿  g_rogue_newweap.cpp
      Creating library ../game_x64.lib and object ../game_x64.exp
   Generating code
-  1507 of 9850 functions (15.3%) were compiled, the rest were copied from previous compilation.
+  1531 of 9850 functions (15.5%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    300 functions had inline decision re-evaluated but remain unchanged
+    121 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   game.vcxproj -> C:\Users\Patri\Documents\GitHub\quake2-rerelease-dll\game_x64.dll

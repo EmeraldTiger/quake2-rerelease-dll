@@ -2043,7 +2043,7 @@ model="models/weapons/g_shotg/tris.md2"
 		/* use_name */  "ETF Cannon",
 		/* pickup_name */  "$item_etf_cannon",
 		/* pickup_name_definite */ "$item_etf_cannon_def",
-		/* quantity */ 1,
+		/* quantity */ 20,
 		/* ammo */ IT_AMMO_FLECHETTES,
 		/* chain */ IT_WEAPON_MACHINEGUN,
 		/* flags */ IF_WEAPON | IF_STAY_COOP,

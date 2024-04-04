@@ -359,6 +359,7 @@ void Weapon_ETFCannon_Fire(edict_t* ent)
 
 	for (int i = 1; i <= 20; i++)
 	{
+
 		P_ProjectSource(ent, ent->client->v_angle, { 8, 8, -8 }, start, dir);
 
 		dir[0] += crandom() * 0.1;
@@ -367,7 +368,7 @@ void Weapon_ETFCannon_Fire(edict_t* ent)
 
 		int speed_var = frandom() * 800;
 
-		fire_flechette(ent, start, dir, 9, 1150 + speed_var, 30);
+		fire_flechette(ent, start, dir, 10, 1300 + speed_var, 30);
 	}
 
 	P_AddWeaponKick(ent, ent->client->v_forward * -2, { -1.f, 0.f, 0.f });
