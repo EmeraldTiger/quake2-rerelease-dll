@@ -150,6 +150,9 @@ void SP_monster_guardian(edict_t *self);
 void SP_monster_arachnid(edict_t *self);
 void SP_monster_guncmdr(edict_t *self);
 
+// EMERALD
+void SP_monster_arachnid_commander(edict_t* self);
+
 void SP_monster_commander_body(edict_t *self);
 
 void SP_turret_breach(edict_t *self);
@@ -362,6 +365,9 @@ static const std::initializer_list<spawn_t> spawns = {
 	{ "monster_guardian", SP_monster_guardian },
 	{ "monster_arachnid", SP_monster_arachnid },
 	{ "monster_guncmdr", SP_monster_guncmdr },
+
+	// EMERALD
+	{ "monster_arachnid_commander", SP_monster_arachnid_commander },
 
 	{ "monster_commander_body", SP_monster_commander_body },
 

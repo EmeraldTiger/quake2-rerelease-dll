@@ -126,6 +126,7 @@ enum powerup_t : uint8_t
 	POWERUP_TECH2,
 	POWERUP_TECH3,
 	POWERUP_TECH4,
+
 	POWERUP_MAX
 };
 

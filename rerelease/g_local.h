@@ -696,7 +696,9 @@ enum monster_ai_flags_t : uint64_t
 	AI_FORGET_ENEMY = bit_v<35>,			// forget the current enemy
 	AI_DOUBLE_TROUBLE = bit_v<36>, // JORG only
 	AI_REACHED_HOLD_COMBAT = bit_v<37>,
-	AI_THIRD_EYE = bit_v<38>
+	AI_THIRD_EYE = bit_v<38>,
+
+	AI_BUFF_ALLY = bit_v<39> // arachnid commander's damage enhancement
 };
 MAKE_ENUM_BITFLAGS(monster_ai_flags_t);
 
@@ -3104,6 +3106,9 @@ struct edict_t
 	edict_t *movetarget;
 	float	 yaw_speed;
 	float	 ideal_yaw;
+
+	// EMERALD
+	bool	commander; // for the Arachnid Commander (as opposed to using the mass hack for the Medic Commander)
 
 	gtime_t nextthink;
 	save_prethink_t prethink;

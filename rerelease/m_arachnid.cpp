@@ -16,14 +16,79 @@ static cached_soundindex sound_pain;
 static cached_soundindex sound_death;
 static cached_soundindex sound_sight;
 
+edict_t* arachnid_FindAllyToBuff(edict_t* self);
+
 MONSTERINFO_SIGHT(arachnid_sight) (edict_t *self, edict_t *other) -> void
 {
 	gi.sound(self, CHAN_VOICE, sound_sight, 1, ATTN_NORM, 0);
 }
 
+MONSTERINFO_SEARCH(arachnid_search) (edict_t* self) -> void
+{
+	if (self->commander)
+	{
+		if (!(self->monsterinfo.aiflags & AI_MEDIC))
+		{
+			edict_t* ent;
+
+			ent = arachnid_FindAllyToBuff(self);
+			if (ent)
+			{
+				self->oldenemy = self->enemy;
+				self->enemy = ent;
+				self->enemy->monsterinfo.healer = self;
+				self->monsterinfo.aiflags |= AI_MEDIC;
+				FoundTarget(self);
+				return;
+			}
+		}
+	}
+}
+
 //
 // stand
 //
+
+edict_t* arachnid_FindAllyToBuff(edict_t* self)
+{
+	float	 radius;
+	edict_t* ent = nullptr;
+	edict_t* best = nullptr;
+
+	if (self->monsterinfo.react_to_damage_time > level.time)
+		return nullptr;
+
+	radius = 1024;
+
+	while ((ent = findradius(ent, self->s.origin, radius)) != nullptr)
+	{
+		if (ent == self)
+			continue;
+		if (!(ent->svflags & SVF_MONSTER))
+			continue;
+		if (ent->health <= 0)
+			continue;
+		if (!visible(self, ent))
+			continue;
+		if (!strncmp(ent->classname, "player", 6)) // stop it from trying to heal player_noise entities
+			continue;
+		if (ent->monsterinfo.quad_time > level.time)
+			continue;
+		if (!best)
+		{
+			best = ent;
+			continue;
+		}
+		if (ent->max_health <= best->max_health)
+			continue;
+		best = ent;
+	}
+
+	if (best)
+		self->timestamp = level.time + 10_sec;
+
+	return best;
+}
 
 mframe_t arachnid_frames_stand[] = {
 	{ ai_stand },
@@ -97,13 +162,36 @@ MMOVE_T(arachnid_move_run) = { FRAME_walk1, FRAME_walk10, arachnid_frames_run, n
 
 MONSTERINFO_RUN(arachnid_run) (edict_t *self) -> void
 {
+
+	if (self->commander)
+	{
+		if (!(self->monsterinfo.aiflags & AI_MEDIC))
+		{
+			edict_t* ent;
+
+			ent = arachnid_FindAllyToBuff(self);
+			if (ent)
+			{
+				self->oldenemy = self->enemy;
+				self->enemy = ent;
+				self->enemy->monsterinfo.healer = self;
+				self->monsterinfo.aiflags |= AI_MEDIC;
+				FoundTarget(self);
+				return;
+			}
+		}
+	}
+
 	if (self->monsterinfo.aiflags & AI_STAND_GROUND)
 	{
 		M_SetAnimation(self, &arachnid_move_stand);
 		return;
 	}
+	else
+	{
+		M_SetAnimation(self, &arachnid_move_run);
+	}
 
-	M_SetAnimation(self, &arachnid_move_run);
 }
 
 //
@@ -160,6 +248,25 @@ void arachnid_charge_rail(edict_t *self)
 	self->pos1[2] += self->enemy->viewheight;
 }
 
+void arachnid_etf(edict_t* self)
+{
+	vec3_t start;
+	vec3_t dir;
+	vec3_t forward, right;
+	monster_muzzleflash_id_t id;
+
+	id = MZ2_ARACHNID_RAIL2;
+
+	AngleVectors(self->s.angles, forward, right, nullptr);
+	start = M_ProjectFlashSource(self, monster_flash_offset[id], forward, right);
+
+	// calc direction to where we targeted
+	dir = self->pos1 - start;
+	dir.normalize();
+
+	monster_fire_flechette(self, start, dir, 10, 1300, id);
+}
+
 void arachnid_rail(edict_t *self)
 {
 	vec3_t start;
@@ -208,6 +315,16 @@ mframe_t arachnid_frames_attack1[] = {
 	{ ai_charge }
 };
 MMOVE_T(arachnid_attack1) = { FRAME_rails1, FRAME_rails11, arachnid_frames_attack1, arachnid_run };
+
+mframe_t arachnid_commander_frames_attack1[] = {
+	{ ai_charge, 0, arachnid_charge_rail },
+	{ ai_charge },
+	{ ai_charge },
+	{ ai_charge, 0, arachnid_etf },
+	{ ai_charge, 0, arachnid_charge_rail },
+	{ ai_charge },
+};
+MMOVE_T(arachnid_commander_attack1) = { FRAME_rails6, FRAME_rails11, arachnid_commander_frames_attack1, arachnid_run };
 
 mframe_t arachnid_frames_attack_up1[] = {
 	{ ai_charge },
@@ -258,17 +375,52 @@ mframe_t arachnid_frames_melee[] = {
 };
 MMOVE_T(arachnid_melee) = { FRAME_melee_atk1, FRAME_melee_atk12, arachnid_frames_melee, arachnid_run };
 
+void arachnid_beam_attack(edict_t* self)
+{
+	//gi.LocBroadcast_Print(PRINT_CHAT, "TEST");
+	self->enemy->monsterinfo.quad_time = level.time + 10_sec;
+	self->enemy->monsterinfo.aiflags |= AI_IGNORE_SHOTS;
+}
+
+mframe_t arachnid_frames_allyBeam[] = {
+	{ ai_charge},
+	{ ai_move, 0, monster_footstep},
+	{ ai_move, 0, arachnid_beam_attack},
+	{ ai_move, 0, arachnid_beam_attack},
+	{ ai_move},
+};
+MMOVE_T(arachnid_move_allyBeam) = { FRAME_rails1, FRAME_rails5, arachnid_frames_allyBeam, arachnid_run };
+
 MONSTERINFO_ATTACK(arachnid_attack) (edict_t *self) -> void
 {
+
 	if (!self->enemy || !self->enemy->inuse)
 		return;
+
+	if (self->commander)
+	{
+		if (self->monsterinfo.aiflags & AI_MEDIC)
+		{
+			M_SetAnimation(self, &arachnid_move_allyBeam);
+			return;
+		}
+	}
 
 	if (self->monsterinfo.melee_debounce_time < level.time && range_to(self, self->enemy) < MELEE_DISTANCE)
 		M_SetAnimation(self, &arachnid_melee);
 	else if ((self->enemy->s.origin[2] - self->s.origin[2]) > 150.f)
 		M_SetAnimation(self, &arachnid_attack_up1);
 	else
-		M_SetAnimation(self, &arachnid_attack1);
+	{
+		if (self->commander)
+		{
+			M_SetAnimation(self, &arachnid_commander_attack1);
+		}
+		else
+		{
+			M_SetAnimation(self, &arachnid_attack1);
+		}
+	}
 }
 
 //
@@ -376,6 +528,58 @@ void SP_monster_arachnid(edict_t *self)
 	self->monsterinfo.run = arachnid_run;
 	self->monsterinfo.attack = arachnid_attack;
 	self->monsterinfo.sight = arachnid_sight;
+
+	gi.linkentity(self);
+
+	M_SetAnimation(self, &arachnid_move_stand);
+
+	walkmonster_start(self);
+}
+
+//
+// monster_arachnid_commander
+//
+
+/*QUAKED monster_arachnid_commander (1 .5 0) (-48 -48 -20) (48 48 48) Ambush Trigger_Spawn Sight
+ */
+void SP_monster_arachnid_commander(edict_t* self)
+{
+	if (!M_AllowSpawn(self)) {
+		G_FreeEdict(self);
+		return;
+	}
+
+	sound_step.assign("insane/insane11.wav");
+	sound_charge.assign("gladiator/railgun.wav");
+	sound_melee.assign("gladiator/melee3.wav");
+	sound_melee_hit.assign("gladiator/melee2.wav");
+	sound_pain.assign("arachnid/pain.wav");
+	sound_death.assign("arachnid/death.wav");
+	sound_sight.assign("arachnid/sight.wav");
+
+	self->s.modelindex = gi.modelindex("models/monsters/arachnid/tris.md2");
+	self->mins = { -48, -48, -20 };
+	self->maxs = { 48, 48, 48 };
+	self->movetype = MOVETYPE_STEP;
+	self->solid = SOLID_BBOX;
+
+	self->health = 1000 * st.health_multiplier;
+	self->gib_health = -200;
+
+	self->monsterinfo.scale = MODEL_SCALE;
+
+	self->mass = 450;
+	self->commander = true;
+	self->monsterinfo.aiflags |= AI_IGNORE_SHOTS;
+
+	self->pain = arachnid_pain;
+	self->die = arachnid_die;
+	self->monsterinfo.stand = arachnid_stand;
+	self->monsterinfo.walk = arachnid_walk;
+	self->monsterinfo.run = arachnid_run;
+	self->monsterinfo.attack = arachnid_attack;
+	self->monsterinfo.sight = arachnid_sight;
+	self->monsterinfo.search = arachnid_search;
 
 	gi.linkentity(self);
 
